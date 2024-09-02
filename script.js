@@ -1,38 +1,25 @@
 let tasks = [];
-
+let id = 0;
 let addBtn = document.getElementById("addBtn");
 
 addBtn.setAttribute("onclick","updateTasks();");
 
-function showList(){
-    let div = document.getElementById("tasks");
-    let resHTML = ``;
-
-    for(let i = 0;i<tasks.length;i++){
-        resHTML+=`<div class="elem">
-                    <h1>${tasks[i]}</h1>
-                    <button id="dltBtn${i}">Delete</button>
-                </div>`
-    }
-    div.innerHTML = resHTML;
-
-    for(let i = 0;i<tasks.length;i++){
-        document.getElementById(`dltBtn${i}`).setAttribute("onclick",`removeItem(${i})`);
-    }
-}
-
 function updateTasks(){
     let val = document.getElementById("input");
+    let div = document.getElementById("tasks");
+    let resHTML = ``;
     if(val.value){
-        tasks.push(val.value);
+        div.innerHTML+=`<div class="elem" id="${id}">
+                    <h1>${val.value}</h1>
+                    <button id="dltBtn${id}" onclick="removeItem(${id})">Delete</button>
+                </div>`;
     }
+    id++;
     val.value='';
-    showList();
 }
 function removeItem(index){
     tasks.splice(index,1);
-    console.log(tasks);
-    showList();
+    document.getElementById(`${index}`).remove();
 }
 
 function checkEnter(event){
